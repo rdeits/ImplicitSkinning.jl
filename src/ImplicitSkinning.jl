@@ -27,9 +27,12 @@ function TwiceDifferentiableFunction(f::Function)
 		lambdify(ddf_sym, [x]))
 end
 
-rbf_cube = TwiceDifferentiableFunction(x -> x^3, x -> 3x^2, x -> 6x)
+phi(x) = x^3
+dphi(x) = 3x^2
+ddphi(x) = 6x
+phi_x_cubed = TwiceDifferentiableFunction(phi, dphi, ddphi)
 
-function HermiteRadialField{T}(points::Array{T, 2}, normals::Array{T, 2}, phi::TwiceDifferentiableFunction)
+function HermiteRadialField{T}(points::Array{T, 2}, normals::Array{T, 2}, phi::TwiceDifferentiableFunction=phi_x_cubed)
 	@assert size(points) == size(normals)
 	dimension = size(points, 1)
 	num_points = size(points, 2)
@@ -73,15 +76,14 @@ function HermiteRadialField{T}(points::Array{T, 2}, normals::Array{T, 2}, phi::T
 	HermiteRadialField{T}(vec(alphas), betas, points, phi)
 end
 
-function evaluate{T}(field::HermiteRadialField{T}, x::Vector)
-	value = zero(T)
+function evaluate{T}(field::HermiteRadialField{T}, x::Vector{T})
+	value::T = zero(T)
 	dimension = size(field.points, 1)
 	u = Array{T}(dimension)
 	for i = 1:size(field.points, 2)
 		for j = 1:dimension
 			u[j] = x[j] - field.points[j, i]
 		end
-		# u = x - vec(field.points[:,i])
 		n = norm(u)
 		if n > 0
 			value += field.alphas[i] * field.phi.f(n) + field.phi.df(n) / n * (field.betas[:,i]' * u)[1]

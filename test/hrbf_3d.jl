@@ -12,8 +12,8 @@ function hrbf_3d()
 	# gen = ImplicitSkinning.HRBFGenerator(dimension, x -> x^3)
 	# @time gen = ImplicitSkinning.HRBFGenerator(dimension, x -> x^3)
 
-	field = HermiteRadialField(points, normals, ImplicitSkinning.rbf_cube)
-	@time field = HermiteRadialField(points, normals, ImplicitSkinning.rbf_cube)
+	field = HermiteRadialField(points, normals)
+	@time field = HermiteRadialField(points, normals)
 
 
 
@@ -26,6 +26,8 @@ function hrbf_3d()
 
 	evaluate(field, [X[1], Y[1], Z[1]])
 	@time evaluate(field, [X[1], Y[1], Z[1]])
+	v = [X[1], Y[1], Z[1]]
+	@time for j = 1:1e5; evaluate(field, v); end
 	@time C = [evaluate(field, [x,y,z]) for (x,y,z) in product(X, Y, Z)];
 end
 

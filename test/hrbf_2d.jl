@@ -13,7 +13,7 @@ function hrbf_2d()
 
 	# f_result = ImplicitSkinning.get_field(gen, points, normals)
 
-	field = HermiteRadialField(points, normals, ImplicitSkinning.rbf_cube)
+	field = HermiteRadialField(points, normals)
 
 	X = linspace(-2, 2)
 	Y = linspace(-2, 2)
