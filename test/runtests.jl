@@ -1,5 +1,6 @@
 using ImplicitSkinning
 using Base.Test
 
-# write your own tests here
-@test 1 == 1
+include("hrbf_2d.jl")
+include("hrbf_3d.jl")
+
