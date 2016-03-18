@@ -1,3 +1,3 @@
 # ImplicitSkinning
 
-[![Build Status](https://travis-ci.org/rdeits/ImplicitSkinning.jl.svg?branch=master)](https://travis-ci.org/rdeits/ImplicitSkinning.jl)
+This work is being continued and improved in [rdeits/SpatialFields](https://github.com/rdeits/SpatialFields.jl)
